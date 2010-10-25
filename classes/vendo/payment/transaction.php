@@ -38,7 +38,7 @@
  * @license    http://github.com/zombor/Vendo/raw/master/LICENSE
  *
  */
-class Payment_Transaction
+class Vendo_Payment_Transaction
 {
 	protected $data = array(
 		// The Payment raw response code. See Payment class constants

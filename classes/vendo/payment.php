@@ -7,7 +7,7 @@
  * @copyright  (c) 2010 Jeremy Bush
  * @license    http://github.com/zombor/Vendo/raw/master/LICENSE
  */
-class Payment
+class Vendo_Payment
 {
 	const TYPE_AVS_ONLY_REQUEST             = 1;
 	const TYPE_PRE_AUTH_REQUEST             = 2;

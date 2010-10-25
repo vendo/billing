@@ -8,7 +8,7 @@
  * @copyright  (c) 2010 Jeremy Bush
  * @license    http://github.com/zombor/Vendo/raw/master/LICENSE
  */
-class Payment_Authorize implements Payment_Driver
+class Vendo_Payment_Authorize implements Vendo_Payment_Driver
 {
 	// Gateway url values
 	const LIVE_GATEWAY = 'https://secure.authorize.net/gateway/transact.dll';

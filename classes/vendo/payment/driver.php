@@ -70,7 +70,7 @@
  * @license    http://github.com/zombor/Vendo/raw/master/LICENSE
  *
  */
-interface Payment_Driver
+interface Vendo_Payment_Driver
 {
 	/**
 	 * Determines if this object is in test mode or not

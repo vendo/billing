@@ -7,7 +7,7 @@
  * @copyright  (c) 2010 Jeremy Bush
  * @license    http://github.com/zombor/Vendo/raw/master/LICENSE
  */
-abstract class View_Credit_Card extends View_Layout
+abstract class Vendo_View_Credit_Card extends View_Layout
 {
 	// We only extend layout so we can inherit the methods
 	public $render_layout = FALSE;

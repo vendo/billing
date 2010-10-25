@@ -7,7 +7,7 @@
  * @copyright  (c) 2010 Jeremy Bush
  * @license    http://github.com/zombor/Vendo/raw/master/LICENSE
  */
-class Model_Contact extends AutoModeler_ORM
+class Vendo_Model_Contact extends AutoModeler_ORM
 {
 	protected $_table_name = 'contacts';
 

@@ -7,7 +7,7 @@
  * @copyright  (c) 2010 Jeremy Bush
  * @license    http://github.com/zombor/Vendo/raw/master/LICENSE
  */
-class Model_Credit_Card
+class Vendo_Model_Credit_Card
 {
 	protected $card_number;
 

@@ -7,7 +7,7 @@
  * @copyright  (c) 2010 Jeremy Bush
  * @license    http://github.com/zombor/Vendo/raw/master/LICENSE
  */
-class View_Authorize extends View_Credit_Card
+class Vendo_View_Authorize extends Vendo_View_Credit_Card
 {
 	
 }
