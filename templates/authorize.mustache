@@ -1,0 +1,17 @@
+<fieldset>
+	<legend>Credit Card Information</legend>
+	<ul>
+		<li>
+			<label for="card_number">Card Number</label><br />
+			<input type="text" name="payment[card_number]" id="card_number" />
+		</li>
+		<li>
+			<label for="exp_date">Expiration Date</label><br />
+			{{>months}} {{>years}}
+		</li>
+		<li>
+			<label for="card_code">Card Code</label><br />
+			<input type="text" name="payment[card_code]" id="card_code" />
+		</li>
+	</ul>
+</fieldset>
