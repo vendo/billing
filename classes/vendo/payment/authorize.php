@@ -181,7 +181,7 @@ class Vendo_Payment_Authorize implements Vendo_Payment_Driver
 	 *
 	 * @return null
 	 */
-	public function set_address(Model_Address $address)
+	public function set_address(Model_Vendo_Address $address)
 	{
 		$this->address = $address->address1;
 		$this->city = $address->city;

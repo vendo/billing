@@ -85,12 +85,12 @@ class Vendo_Model_Order extends AutoModeler_ORM implements Countable
 	 * Adds an item to the user's cart. This does not persist the relationship
 	 * in the database
 	 * 
-	 * @param Model_Product $product  the product model to add
+	 * @param Model_Vendo_Product $product  the product model to add
 	 * @param int           $quantity the number of item to add to the cart
 	 * 
 	 * @return bool
 	 */
-	public function add_product(Model_Product $product, $quantity = 1)
+	public function add_product(Model_Vendo_Product $product, $quantity = 1)
 	{
 		if ($this->id)
 		{
@@ -142,7 +142,7 @@ class Vendo_Model_Order extends AutoModeler_ORM implements Countable
 	 *
 	 * @return null
 	 */
-	public function modify_quantity(Model_Product $product, $new_quantity)
+	public function modify_quantity(Model_Vendo_Product $product, $new_quantity)
 	{
 		if ($this->id)
 		{

@@ -31,7 +31,7 @@ class Model_Order_Test extends Vendo_TestCase
 	public function test_add_read_product()
 	{
 		// Create a new product first
-		$product = new Model_Product;
+		$product = new Model_Vendo_Product;
 		$product->set_fields(
 			array(
 				'name'        => 'Unit Test',
@@ -59,7 +59,7 @@ class Model_Order_Test extends Vendo_TestCase
 	public function test_modify_quantity()
 	{
 		// Create a new product first
-		$product = new Model_Product;
+		$product = new Model_Vendo_Product;
 		$product->set_fields(
 			array(
 				'name'        => 'Unit Test',
@@ -105,7 +105,7 @@ class Model_Order_Test extends Vendo_TestCase
 	public function test_saved_order_can_retrive_products()
 	{
 		// Create a new product first
-		$product = new Model_Product;
+		$product = new Model_Vendo_Product;
 		$product->set_fields(
 			array(
 				'name'        => 'Unit Test',
@@ -142,7 +142,7 @@ class Model_Order_Test extends Vendo_TestCase
 	public function test_saved_order_is_fixed()
 	{
 		// Create a new product first
-		$product = new Model_Product;
+		$product = new Model_Vendo_Product;
 		$product->set_fields(
 			array(
 				'name'        => 'Unit Test',

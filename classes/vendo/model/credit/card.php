@@ -32,7 +32,7 @@ class Vendo_Model_Credit_Card
 		$exp_date,
 		$card_code,
 		Model_Contact $contact,
-		Model_Address $address
+		Model_Vendo_Address $address
 	)
 	{
 		$this->card_number = $card_number;

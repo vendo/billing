@@ -114,5 +114,5 @@ interface Vendo_Payment_Driver
 	 *
 	 * @return null
 	 */
-	public function set_address(Model_Address $address);
+	public function set_address(Model_Vendo_Address $address);
 }
