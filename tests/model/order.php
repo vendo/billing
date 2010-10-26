@@ -126,9 +126,11 @@ class Model_Order_Test extends Vendo_TestCase
 		$saved_order = new Model_Order($order->id);
 		$this->assertEquals(2, count($saved_order));
 
-		$saved_product = current($saved_order->get_products());
-		$this->assertEquals($product->id, $saved_product['product']->id);
-		$this->assertEquals(2, $saved_product['quantity']);
+		$saved_product = $saved_order->get_products();
+		$saved_product = $saved_product[0];
+
+		$this->assertEquals($product->id, $saved_product->product->id);
+		$this->assertEquals(2, $saved_product->quantity);
 
 		$product->delete();
 		$order->delete();

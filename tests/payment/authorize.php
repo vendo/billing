@@ -18,6 +18,14 @@ class Payment_Authorize_Test extends PHPUnit_Framework_TestCase
 	 */
 	public function test_payments()
 	{
+		// We can't do anything if the config isn't filled out
+		if ( ! Kohana::config('payment.default.authorize_test.login_id') OR
+			! Kohana::config('payment.default.authorize_test.trans_key'))
+		{
+			$this->markTestSkipped();
+			return;
+		}
+
 		// Force test mode
 		$authorize = new Payment_Authorize(true);
 
@@ -41,7 +49,7 @@ class Payment_Authorize_Test extends PHPUnit_Framework_TestCase
 		}
 		catch (Payment_Exception $e) // Skip these tests if we can't connect
 		{
-			if ($e->getCode() == Payment::CONNECTION_ERROR)
+			if ($e->getCode() == Vendo_Payment::CONNECTION_ERROR)
 			{
 				$this->markTestSkipped();
 				return;
