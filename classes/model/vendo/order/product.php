@@ -7,7 +7,7 @@
  * @copyright  (c) 2010 Jeremy Bush
  * @license    http://github.com/zombor/Vendo/raw/master/LICENSE
  */
-class Vendo_Model_Order_Product extends AutoModeler_ORM
+class Model_Vendo_Order_Product extends AutoModeler_ORM
 {
 	protected $_table_name = 'order_products';
 
