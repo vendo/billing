@@ -2,10 +2,10 @@
 /**
  * Model for relating products to orders
  *
- * @package    Vendo
- * @author     Jeremy Bush
- * @copyright  (c) 2010 Jeremy Bush
- * @license    http://github.com/zombor/Vendo/raw/master/LICENSE
+ * @package   Vendo
+ * @author    Jeremy Bush <contractfrombelow@gmail.com>
+ * @copyright (c) 2010-2011 Jeremy Bush
+ * @license   ISC License http://github.com/zombor/Vendo/raw/master/LICENSE
  */
 class Model_Vendo_Order_Product extends AutoModeler_ORM
 {
@@ -26,6 +26,8 @@ class Model_Vendo_Order_Product extends AutoModeler_ORM
 
 	/**
 	 * Override __get() to translate product to vendo_product
+	 * 
+	 * @param string $key the key to get
 	 *
 	 * @return mixed
 	 */
@@ -33,7 +35,13 @@ class Model_Vendo_Order_Product extends AutoModeler_ORM
 	{
 		if ('product' == $key)
 		{
-			return db::select_array(AutoModeler::factory('vendo_product')->fields())->from(AutoModeler::factory('vendo_product')->get_table_name())->where('id', '=', $this->_data[$key.'_id'])->as_object('Model_Vendo_Product')->execute($this->_db)->current();
+			return db::select_array(
+				AutoModeler::factory('vendo_product')->fields()
+			)->from(AutoModeler::factory('vendo_product')->get_table_name())
+			->where('id', '=', $this->_data[$key.'_id'])
+			->as_object('Model_Vendo_Product')
+			->execute($this->_db)
+			->current();
 		}
 
 		return parent::__get($key);

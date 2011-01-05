@@ -3,10 +3,10 @@
 /**
  * Class for processing authorize.net transactions
  *
- * @package    Vendo
- * @author     Jeremy Bush
- * @copyright  (c) 2010 Jeremy Bush
- * @license    http://github.com/zombor/Vendo/raw/master/LICENSE
+ * @package   Vendo
+ * @author    Jeremy Bush <contractfrombelow@gmail.com>
+ * @copyright (c) 2010-2011 Jeremy Bush
+ * @license   ISC License http://github.com/zombor/Vendo/raw/master/LICENSE
  */
 class Vendo_Payment_Authorize implements Vendo_Payment_Driver
 {
@@ -16,32 +16,32 @@ class Vendo_Payment_Authorize implements Vendo_Payment_Driver
 		'https://certification.authorize.net/gateway/transact.dll';
 
 	// The gateway url to process with
-	protected $_gateway = null;
+	protected $_gateway = NULL;
 
 	const DEV_GATEWAY_ID = 12345;
 
 	/* Fields required to do a transaction
-	 * anything here is required, and if the value is false, it means the value
+	 * anything here is required, and if the value is FALSE, it means the value
 	 * hasn't been set yet and needs to be before processing
 	 */
 	private $_required_fields = array
 	(
-		'x_login'           => false,
-		'x_tran_key'        => false,
-		'x_version'         => true,
-		'x_delim_char'      => true,
-		'x_type'            => true,
-		'x_method'          => true,
-		'x_trans_id'        => true,
-		'x_relay_response'  => true,
-		'x_card_num'        => false,
-		'x_exp_date'        => false,
-		'x_card_code'       => false,
-		'x_amount'          => false,
-		'x_address'         => true,
-		'x_city'            => true,
-		'x_state'           => true,
-		'x_zip'             => true,
+		'x_login'           => FALSE,
+		'x_tran_key'        => FALSE,
+		'x_version'         => TRUE,
+		'x_delim_char'      => TRUE,
+		'x_type'            => TRUE,
+		'x_method'          => TRUE,
+		'x_trans_id'        => TRUE,
+		'x_relay_response'  => TRUE,
+		'x_card_num'        => FALSE,
+		'x_exp_date'        => FALSE,
+		'x_card_code'       => FALSE,
+		'x_amount'          => FALSE,
+		'x_address'         => TRUE,
+		'x_city'            => TRUE,
+		'x_state'           => TRUE,
+		'x_zip'             => TRUE,
 	);
 
 	// Default required values
@@ -94,7 +94,7 @@ class Vendo_Payment_Authorize implements Vendo_Payment_Driver
 
 			// Satisfy the required attribute if the value is valid
 			if ($val AND array_key_exists('x_'.$key, $this->_required_fields))
-				$this->_required_fields['x_'.$key] = true;
+				$this->_required_fields['x_'.$key] = TRUE;
 
 			// Convert type constants to strings that auth.net understands
 			if ('type' == $key)
@@ -107,10 +107,10 @@ class Vendo_Payment_Authorize implements Vendo_Payment_Driver
 	/**
 	 * Constructor. Sets up test mode, login keys, etc.
 	 *
-	 * @param bool $test_mode set to true to force test mode. false will use
+	 * @param bool $test_mode set to TRUE to force test mode. FALSE will use
 	 *                        config value
 	 */
-	public function __construct($test_mode = false)
+	public function __construct($test_mode = FALSE)
 	{
 		$this->curl_config = Kohana::config('payment')->default['curl'];
 
@@ -145,8 +145,10 @@ class Vendo_Payment_Authorize implements Vendo_Payment_Driver
 
 	/**
 	 * Sets credit card information
+	 * 
+	 * @param Model_Credit_Card $credit_card the card object to set
 	 *
-	 * @return null
+	 * @return NULL
 	 */
 	public function set_credit_card(Model_Credit_Card $credit_card)
 	{
@@ -157,8 +159,10 @@ class Vendo_Payment_Authorize implements Vendo_Payment_Driver
 
 	/**
 	 * Sets the transaction amount
+	 * 
+	 * @param float $amount the amount to set
 	 *
-	 * @return null
+	 * @return NULL
 	 */
 	public function set_amount($amount)
 	{
@@ -167,8 +171,11 @@ class Vendo_Payment_Authorize implements Vendo_Payment_Driver
 
 	/**
 	 * Sets the buyer's name
+	 * 
+	 * @param string $first_name the first name to set
+	 * @param string $last_name  the last name to set
 	 *
-	 * @return null
+	 * @return NULL
 	 */
 	public function set_name($first_name, $last_name)
 	{
@@ -178,8 +185,10 @@ class Vendo_Payment_Authorize implements Vendo_Payment_Driver
 
 	/**
 	 * Sets the buyer's address for AVS
+	 * 
+	 * @param Model_Vendo_Address $address the address model to set
 	 *
-	 * @return null
+	 * @return NULL
 	 */
 	public function set_address(Model_Vendo_Address $address)
 	{
@@ -201,7 +210,7 @@ class Vendo_Payment_Authorize implements Vendo_Payment_Driver
 		$this->process_values();
 
 		// Check for required fields
-		if (in_array(false, $this->_required_fields))
+		if (in_array(FALSE, $this->_required_fields))
 		{
 			$fields = array();
 			foreach ($this->_required_fields as $key => $field)

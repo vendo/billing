@@ -32,10 +32,10 @@
  *  * vendor_id            - the gateway vendor this transaction was sent to
  *  * md5_verified         - has this transaction been checked for MitM attacks?
  *
- * @package    Vendo
- * @author     Jeremy Bush
- * @copyright  (c) 2010 Jeremy Bush
- * @license    http://github.com/zombor/Vendo/raw/master/LICENSE
+ * @package   Vendo
+ * @author    Jeremy Bush <contractfrombelow@gmail.com>
+ * @copyright (c) 2010-2011 Jeremy Bush
+ * @license   ISC License http://github.com/zombor/Vendo/raw/master/LICENSE
  *
  */
 class Vendo_Payment_Transaction
@@ -62,7 +62,7 @@ class Vendo_Payment_Transaction
 		// The vendor that gave us this data?
 		'vendor_id' => '',
 		// Is this transaction valid?
-		'md5_verified' => false,
+		'md5_verified' => FALSE,
 	);
 
 	/**

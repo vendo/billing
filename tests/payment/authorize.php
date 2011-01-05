@@ -2,10 +2,10 @@
 /**
  * Tests the order class
  *
- * @package    Vendo
- * @author     Jeremy Bush
- * @copyright  (c) 2010 Jeremy Bush
- * @license    http://github.com/zombor/Vendo/raw/master/LICENSE
+ * @package   Vendo
+ * @author    Jeremy Bush <contractfrombelow@gmail.com>
+ * @copyright (c) 2010-2011 Jeremy Bush
+ * @license   ISC License http://github.com/zombor/Vendo/raw/master/LICENSE
  *
  * @group Vendo_Billing
  */
@@ -14,7 +14,7 @@ class Payment_Authorize_Test extends PHPUnit_Framework_TestCase
 	/**
 	 * Tests basic payments
 	 *
-	 * @return null
+	 * @return NULL
 	 */
 	public function test_payments()
 	{
@@ -27,10 +27,10 @@ class Payment_Authorize_Test extends PHPUnit_Framework_TestCase
 		}
 
 		// Force test mode
-		$authorize = new Payment_Authorize(true);
+		$authorize = new Payment_Authorize(TRUE);
 
 		// Make sure it's in test mode
-		$this->assertSame(true, $authorize->test_mode());
+		$this->assertSame(TRUE, $authorize->test_mode());
 
 		$authorize->card_num = '5424000000000015';
 		$authorize->exp_date = strtotime('+1 year');
@@ -58,7 +58,7 @@ class Payment_Authorize_Test extends PHPUnit_Framework_TestCase
 			throw $e;
 		}
 
-		$this->assertSame(true, $result instanceof Payment_Transaction);
+		$this->assertSame(TRUE, $result instanceof Payment_Transaction);
 		$this->assertSame(1, $result->response_code);
 		$this->assertSame('12.34', $result->total);
 		$this->assertSame(Payment::VENDOR_ID_AUTHORIZE, $result->vendor_id);

@@ -64,10 +64,10 @@
  * 
  * $result = $auth_net->process();
  *
- * @package    Vendo
- * @author     Jeremy Bush
- * @copyright  (c) 2010 Jeremy Bush
- * @license    http://github.com/zombor/Vendo/raw/master/LICENSE
+ * @package   Vendo
+ * @author    Jeremy Bush <contractfrombelow@gmail.com>
+ * @copyright (c) 2010-2011 Jeremy Bush
+ * @license   ISC License http://github.com/zombor/Vendo/raw/master/LICENSE
  *
  */
 interface Vendo_Payment_Driver
@@ -90,6 +90,8 @@ interface Vendo_Payment_Driver
 
 	/**
 	 * Sets the credit card
+	 * 
+	 * @param Model_Credit_Card $card the card object to set
 	 *
 	 * @return null
 	 */
@@ -97,6 +99,8 @@ interface Vendo_Payment_Driver
 
 	/**
 	 * Sets the transaction amount
+	 * 
+	 * @param float $amount the amount to set
 	 *
 	 * @return null
 	 */
@@ -104,6 +108,9 @@ interface Vendo_Payment_Driver
 
 	/**
 	 * Sets the buyer's name
+	 * 
+	 * @param string $first the first name to set
+	 * @param string $last  the last name to set
 	 *
 	 * @return null
 	 */
@@ -111,6 +118,8 @@ interface Vendo_Payment_Driver
 
 	/**
 	 * Sets the buyer's address
+	 * 
+	 * @param Model_Vendo_Address $address the address model to set
 	 *
 	 * @return null
 	 */

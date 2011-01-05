@@ -2,10 +2,10 @@
 /**
  * View class to render a form element for credit cards
  *
- * @package    Vendo
- * @author     Jeremy Bush
- * @copyright  (c) 2010 Jeremy Bush
- * @license    http://github.com/zombor/Vendo/raw/master/LICENSE
+ * @package   Vendo
+ * @author    Jeremy Bush <contractfrombelow@gmail.com>
+ * @copyright (c) 2010-2011 Jeremy Bush
+ * @license   ISC License http://github.com/zombor/Vendo/raw/master/LICENSE
  */
 abstract class Vendo_View_Credit_Card extends View_Layout
 {
@@ -22,6 +22,8 @@ abstract class Vendo_View_Credit_Card extends View_Layout
 
 	/**
 	 * Var method overriding years() to pre-select a year
+	 * 
+	 * @param int $year the year to select
 	 *
 	 * @return array
 	 */
@@ -34,6 +36,8 @@ abstract class Vendo_View_Credit_Card extends View_Layout
 
 	/**
 	 * Var method overriding years() to pre-select a year
+	 * 
+	 * @param int $month the month to select
 	 *
 	 * @return array
 	 */

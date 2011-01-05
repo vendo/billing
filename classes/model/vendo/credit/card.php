@@ -2,10 +2,10 @@
 /**
  * Credit Card model class. This class is not persistable.
  *
- * @package    Vendo
- * @author     Jeremy Bush
- * @copyright  (c) 2010 Jeremy Bush
- * @license    http://github.com/zombor/Vendo/raw/master/LICENSE
+ * @package   Vendo
+ * @author    Jeremy Bush <contractfrombelow@gmail.com>
+ * @copyright (c) 2010-2011 Jeremy Bush
+ * @license   ISC License http://github.com/zombor/Vendo/raw/master/LICENSE
  */
 class Model_Vendo_Credit_Card
 {
@@ -24,6 +24,12 @@ class Model_Vendo_Credit_Card
 
 	/**
 	 * Constructor to set class properties
+	 * 
+	 * @param string              $card_number the card number
+	 * @param string              $exp_date    the card expiration date - MMYYYY
+	 * @param string              $card_code   the cvv2 of the card
+	 * @param Model_Contact       $contact     contact to associate with card
+	 * @param Model_Vendo_Address $address     the address to assign to card
 	 *
 	 * @return null
 	 */
@@ -47,6 +53,8 @@ class Model_Vendo_Credit_Card
 
 	/**
 	 * Magic __get method to obtain class properties
+	 * 
+	 * @param string $key the key to get
 	 *
 	 * @return mixed
 	 */

@@ -2,10 +2,10 @@
 /**
  * Class for storing both saved and unsaved user orders (shopping cart)
  *
- * @package    Vendo
- * @author     Jeremy Bush
- * @copyright  (c) 2010 Jeremy Bush
- * @license    http://github.com/zombor/Vendo/raw/master/LICENSE
+ * @package   Vendo
+ * @author    Jeremy Bush <contractfrombelow@gmail.com>
+ * @copyright (c) 2010-2011 Jeremy Bush
+ * @license   ISC License http://github.com/zombor/Vendo/raw/master/LICENSE
  */
 class Model_Vendo_Order extends AutoModeler_ORM implements Countable
 {
@@ -34,6 +34,13 @@ class Model_Vendo_Order extends AutoModeler_ORM implements Countable
 
 	public $credit_card;
 
+	/**
+	 * Overload constructor to set the order products on object load
+	 * 
+	 * @param int $id the id to load
+	 * 
+	 * @return null
+	 */
 	public function __construct($id = NULL)
 	{
 		parent::__construct($id);
@@ -86,7 +93,7 @@ class Model_Vendo_Order extends AutoModeler_ORM implements Countable
 	 * in the database
 	 * 
 	 * @param Model_Vendo_Product $product  the product model to add
-	 * @param int           $quantity the number of item to add to the cart
+	 * @param int                 $quantity the number of items to add
 	 * 
 	 * @return bool
 	 */
@@ -139,6 +146,9 @@ class Model_Vendo_Order extends AutoModeler_ORM implements Countable
 
 	/**
 	 * Directly modifies the quantity of a product in the order
+	 * 
+	 * @param Model_Vendo_Product $product      the product to modify
+	 * @param int                 $new_quantity the new num to set
 	 *
 	 * @return null
 	 */
