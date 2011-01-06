@@ -79,10 +79,10 @@ class Vendo_Payment
 		$driver = new $class($test_mode);
 
 		// Make sure this driver is valid
-		if ( ! ($driver instanceof Payment_Driver))
+		if ( ! ($driver instanceof Vendo_Payment_Driver))
 		{
 			throw new Payment_Exception(
-				$driver.' is not a valid payment driver!'
+				get_class($driver).' is not a valid payment driver!'
 			);
 		}
 
@@ -94,8 +94,8 @@ class Vendo_Payment
 
 		$driver->set_credit_card($order->credit_card);
 		$driver->set_amount($order->amount());
-		$driver->set_name($user->first_name, $user->last_name);
-		$driver->set_address($credit_card->address);
+		$driver->set_name($order->contact->first_name, $order->contact->last_name);
+		$driver->set_address($order->credit_card->address);
 
 		try
 		{

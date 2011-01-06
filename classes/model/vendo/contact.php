@@ -25,4 +25,25 @@ class Model_Vendo_Contact extends AutoModeler_ORM
 		'last_name' => array('not_empty'),
 		'address_id' => array('not_empty', 'numeric'),
 	);
+
+	/**
+	 * Overload __get to return empty address objects
+	 * 
+	 * @param mixed $key the key to get
+	 *
+	 * @return mixed
+	 */
+	public function __get($key)
+	{
+		if ($key == 'address' AND ! $this->_data['address_id'])
+		{
+			return new Model_Vendo_Address;
+		}
+		else if ($key == 'address')
+		{
+			return new Model_Vendo_Address($this->address_id);
+		}
+
+		return parent::__get($key);
+	}
 }

@@ -166,7 +166,7 @@ class Vendo_Payment_Authorize implements Vendo_Payment_Driver
 	 */
 	public function set_amount($amount)
 	{
-		number_format($amount, 2, '.', '');
+		$this->amount = number_format($amount, 2, '.', '');
 	}
 
 	/**
@@ -192,10 +192,10 @@ class Vendo_Payment_Authorize implements Vendo_Payment_Driver
 	 */
 	public function set_address(Model_Vendo_Address $address)
 	{
-		$this->address = $address->address1;
-		$this->city = $address->city;
-		$this->state = $address->state;
-		$this->zip = $address->zipcode;
+		$this->address = $address->billing_address;
+		$this->city = $address->billing_city;
+		$this->state = $address->billing_state;
+		$this->zip = $address->billing_postal_code;
 	}
 
 	/**
