@@ -49,7 +49,7 @@ class Model_Vendo_Order extends AutoModeler_ORM implements Countable
 		{
 			$this->_order_products = $this->find_related(
 				'order_products'
-			)->as_array();
+			);
 		}
 	}
 
@@ -73,7 +73,7 @@ class Model_Vendo_Order extends AutoModeler_ORM implements Countable
 		}
 
 		// Save the related items if this is a new item
-		if ( ! $this->id AND $status = parent::save($validation))
+		if ($status = parent::save($validation))
 		{
 			foreach ($this->_order_products as $product)
 			{
@@ -86,6 +86,25 @@ class Model_Vendo_Order extends AutoModeler_ORM implements Countable
 		}
 
 		return $status;
+	}
+
+	/**
+	 * Obtains all orders, optionally with a limit and offset (page)
+	 *
+	 * @return Database_Result
+	 */
+	public static function get_orders($limit = NULL, $offset = NULL)
+	{
+		$query = NULL;
+
+		if ($offset)
+		{
+			$query = db::select()->offset($offset);
+		}
+		return Model::factory('order')->load(
+			$query,
+			$limit
+		);
 	}
 
 	/**
