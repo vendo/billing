@@ -78,7 +78,7 @@ class Model_Vendo_Credit_Card
 	 */
 	public function validate()
 	{
-		$validate = Validate::factory(
+		$validate = Validation::factory(
 			array(
 				'credit_card_number' => $this->card_number,
 				'credit_card_exp_date' => $this->exp_date,
@@ -88,7 +88,7 @@ class Model_Vendo_Credit_Card
 		->rule('credit_card_number', 'not_empty')
 		->rule('credit_card_number', 'credit_card')
 		->rule('credit_card_exp_date', 'not_empty')
-		->rule('credit_card_exp_date', 'min_length', array(6))
+		->rule('credit_card_exp_date', 'min_length', array(':field', 6))
 		->rule('credit_card_code', 'not_empty');
 
 		if ( ! $validate->check(TRUE))
