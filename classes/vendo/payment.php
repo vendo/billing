@@ -1,6 +1,6 @@
 <?php
 /**
- * Class for processing payment information
+ * Class for processing payment information via a credit card gateway
  *
  * @package   Vendo
  * @author    Jeremy Bush <contractfrombelow@gmail.com>
