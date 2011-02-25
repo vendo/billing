@@ -54,6 +54,27 @@ class Model_Vendo_Order extends AutoModeler_ORM implements Countable
 	}
 
 	/**
+	 * Overload __get to return empty address objects
+	 * 
+	 * @param mixed $key the key to get
+	 *
+	 * @return mixed
+	 */
+	public function __get($key)
+	{
+		if ($key == 'address' AND ! $this->_data['address_id'])
+		{
+			return new Model_Vendo_Address;
+		}
+		else if ($key == 'address')
+		{
+			return new Model_Vendo_Address($this->address_id);
+		}
+
+		return parent::__get($key);
+	}
+
+	/**
 	 * Override save() to set date_created if this is a new object
 	 * 
 	 * @param object $validation a validation object to save with
@@ -86,6 +107,21 @@ class Model_Vendo_Order extends AutoModeler_ORM implements Countable
 		}
 
 		return $status;
+	}
+
+	/**
+	 * Overload delete() method to prevent deletion if the order is saved.
+	 *
+	 * @return mixed
+	 */
+	public function delete()
+	{
+		if ($this->id)
+		{
+			throw new Kohana_Exception('Saved orders cannot be modified!');
+		}
+
+		return parent::delete();
 	}
 
 	/**

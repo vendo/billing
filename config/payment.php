@@ -16,7 +16,7 @@ return array(
 			CURLOPT_RETURNTRANSFER => TRUE,
 			CURLOPT_SSL_VERIFYPEER => TRUE,
 		),
-		'test' => FALSE,
+		'test' => TRUE,
 	),
 	'authorize' => array(
 		'login_id'  => '',
@@ -25,8 +25,8 @@ return array(
 		'duplicate_window' => 1,
 	),
 	'authorize_test' => array(
-		'login_id'  => '',
-		'trans_key' => '',
+		'login_id'  => 'foo',
+		'trans_key' => 'bar',
 		'md5'       => NULL,
 		'duplicate_window' => 1,
 	),
