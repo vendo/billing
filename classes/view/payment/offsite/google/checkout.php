@@ -10,6 +10,7 @@
 class View_Payment_Offsite_Google_Checkout extends Kostache
 {
 	public $items = NULL;
+	public $order_id = NULL;
 
 	/**
 	 * Returns formatted items array for the xml

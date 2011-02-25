@@ -45,7 +45,7 @@ class Vendo_Payment_Offsite
 		// Build the data
 		$driver->set_fields(
 			array(
-				'products' => $order->get_products(),
+				'order' => $order,
 			)
 		);
 

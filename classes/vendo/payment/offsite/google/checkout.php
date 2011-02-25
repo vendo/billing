@@ -13,11 +13,11 @@ class Vendo_Payment_Offsite_Google_Checkout implements Payment_Offsite_Driver
 	// Fields required to do a transaction
 	private $required_fields = array(
 		'xml_body' => FALSE,
-		'products' => FALSE,
+		'order' => FALSE,
 	);
 
 	private $fields = array(
-		'products' => array(),
+		'order' => NULL,
 		'google_API_key' => '',
 		'google_merchant_id' => '',
 		'google_sandbox_API_key' => '',
@@ -102,7 +102,8 @@ class Vendo_Payment_Offsite_Google_Checkout implements Payment_Offsite_Driver
 
 		// Build the XML
 		$xml = new View_Payment_Offsite_Google_Checkout;
-		$xml->items = $this->fields['products'];
+		$xml->items = $this->fields['order']->get_products();
+		$xml->order_id = $this->fields['order']->id;
 		$this->xml_body = $xml->render();
 
 		$post_url = ($this->test_mode)

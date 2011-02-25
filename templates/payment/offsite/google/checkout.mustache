@@ -2,6 +2,7 @@
 
 <checkout-shopping-cart xmlns="http://checkout.google.com/schema/2">
 	<shopping-cart>
+		<merchant-private-data>{{order_id}}</merchant-private-data>
 		<items>
 			{{#items}}<item>
 			<item-name>{{name}}</item-name>
@@ -16,9 +17,16 @@
 				<flat-rate-shipping name="Standard USPS">
 					<price currency="USD">4.00</price>
 				</flat-rate-shipping>
-				<flat-rate-shipping name="Pickup - SE Wisconsin ONLY">
+				<pickup name="Pickup - SE Wisconsin ONLY">
 					<price currency="USD">0.00</price>
-				</flat-rate-shipping>
+					<shipping-restrictions>
+						<allowed-areas>
+							<us-zip-area>
+								<zip-pattern>53140</zip-pattern>
+							</us-zip-area>
+						</allowed-areas>
+					</shipping-restrictions>
+				</pickup>
 			</shipping-methods>
 		</merchant-checkout-flow-support>
 	</checkout-flow-support>
