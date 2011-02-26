@@ -15,13 +15,11 @@ class Vendo_Payment_Offsite
 	 * Processes an order
 	 *
 	 * @param object $order            The Model_Order object to process
-	 * @param string $transaction_type The transaction type to process
 	 * @param bool   $test_mode        set to true to force test mode. false
 	 *                                 will use config value. Determines which
 	 *                                 gateway to use.
-	 * @param bool   $test_flag        set to true to set test request flag
 	 *
-	 * @return object Payment_Transaction
+	 * @return string url for the request to redirect to
 	 */
 	public static function process(
 		Model_Order $order,

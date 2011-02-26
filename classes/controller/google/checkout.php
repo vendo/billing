@@ -14,31 +14,62 @@ class Controller_Google_Checkout extends Controller
 	 *
 	 * @return null
 	 */
-	public function handle()
+	public function action_handle()
 	{
-		// This all needs to be improved, it's copied from an old project of mine
-		if ( ! isset($GLOBALS['HTTP_RAW_POST_DATA']) OR (isset($_SERVER['PHP_AUTH_USER']) AND $_SERVER['PHP_AUTH_USER'] != Kohana::config('google_checkout.merchant_id')) OR (isset($_SERVER['PHP_AUTH_PW']) AND $_SERVER['PHP_AUTH_PW'] != Kohana::config('google_checkout.merchant_key')))
-		{
-			throw new Vendo_404;
-		}
-
-		$response = $GLOBALS['HTTP_RAW_POST_DATA'];
+		$response = Payment_Offsite_Google_Checkout::get_xml_response();
 
 		//If anything was sent then process the xml
 		if( ! empty($response))
 		{
+			// This uses the non SSL "Notification Serial Number" API
+			list($key, $serial_number) = explode('=', $response);
+
+			if ('serial-number' == $key)
+			{
+				// Get the xml
+				$processor = new Payment_Offsite_Google_Checkout(
+					Kohana::config('payment.default.test')
+				);
+				$xml = '<notification-history-request xmlns="http://checkout.google.com/schema/2">
+				  <serial-number>'.$serial_number.'</serial-number>
+				</notification-history-request>';
+				$response = $processor->send($xml);
+				Log::add(Log::INFO, Debug::vars($response));
+			}
+
+
 			$XMLDocument = new DOMDocument( '1.0', 'utf-8' );
 			$XMLDocument->loadXML( utf8_encode( $response ) );
 
 			switch ($XMLDocument->documentElement->tagName)
 			{
 				case 'new-order-notification':
-					// Process the paid order.
+					// Assign the google order number to our order
 					$order_id = $XMLDocument->getElementsByTagName('merchant-private-data')->item(0)->nodeValue;
-					$order = new Model_Order($order_id);
+					$order = new Model_Order_Google($order_id);
+					$order->update_google_id($order_id);
 					$order->update_paid_status(TRUE);
+
+					break;
+				case 'order-state-change-notification':
+					$order_number = $XMLDocument->getElementsByTagName('google-order-number')->item(0)->nodeValue;
+					$previous_state = $XMLDocument->getElementsByTagName('previous-financial-order-state')->item(0)->nodeValue;
+					$new_state = $XMLDocument->getElementsByTagName('new-financial-order-state')->item(0)->nodeValue;
+
+					if ('CHARGED' == $new_state)
+					{
+						// Process the paid order.
+						$order = new Model::factory(
+							'order_google'
+						)->by_google_id($order_number);
+						$order->update_paid_status(TRUE);
+					}
 					break;
 			}
+		}
+		else
+		{
+			throw new Vendo_404('Invalid Request');
 		}
 	}
 }

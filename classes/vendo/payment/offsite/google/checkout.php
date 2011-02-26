@@ -151,13 +151,65 @@ class Vendo_Payment_Offsite_Google_Checkout implements Vendo_Payment_Offsite_Dri
 	}
 
 	/**
+	 * Sends an arbitrary request to the gateway
+	 *
+	 * @return SimpleXMLElement
+	 */
+	public function send($xml)
+	{
+		// Check for required fields
+		if (in_array(FALSE, $this->_required_fields))
+		{
+			$fields = array();
+			foreach ($this->_required_fields as $key => $field)
+			{
+				if ('order' != $key AND ! $field)
+					$fields[] = $key;
+			}
+			throw new Payment_Exception(
+				'Missing required fields in google checkout driver: '.
+				implode(',', $fields)
+			);
+		}
+
+		$post_url = ($this->_test_mode)
+			? 'https://sandbox.google.com/checkout/api/checkout/v2/reports/Merchant/'.$this->_fields['google_sandbox_merchant_id'] // Test mode URL
+			: 'https://checkout.google.com/api/checkout/v2/reports/Merchant/'.$this->_fields['google_merchant_id']; // Live URL
+
+		$ch = curl_init($post_url);
+
+		// Set custom curl options
+		curl_setopt($ch, CURLOPT_POST, true);
+
+		// Set the curl POST fields
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $this->_xml_header);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+		// Execute post and get results
+		$response = curl_exec($ch);
+		curl_close ($ch);
+
+		if ( ! $response)
+		{
+			throw new Payment_Exception(
+				'Error...',
+				array(),
+				$response['error_code']
+			);
+		}
+
+		return $response;
+	}
+
+	/**
 	 * used to get any xml response
 	 * 
 	 * @return (string) xml string
 	 * @param $post_data string recieved from $HTTP_RAW_POST_DATA
 	*/
-	public function get_xml_response($post_data)
+	public static function get_xml_response()
 	{
-		return isset($post_data) ? $post_data : file_get_contents("php://input");
+		return file_get_contents("php://input");
 	}
 }
