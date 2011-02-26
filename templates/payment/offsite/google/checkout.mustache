@@ -2,14 +2,18 @@
 
 <checkout-shopping-cart xmlns="http://checkout.google.com/schema/2">
 	<shopping-cart>
-		<merchant-private-data>{{order_id}}</merchant-private-data>
 		<items>
-			{{#items}}<item>
-			<item-name>{{name}}</item-name>
-			<unit-price currency="USD">{{unit_price}}</unit-price>
-			<quantity>{{quantity}}</quantity>
-		</item>{{/items}}
-	</items>
+			{{#items}}
+			<item>
+				<merchant-item-id>{{id}}</merchant-item-id>
+				<item-name>{{name}}</item-name>
+				<item-description>{{name}}</item-description>
+				<unit-price currency="USD">{{unit_price}}</unit-price>
+				<quantity>{{quantity}}</quantity>
+			</item>
+			{{/items}}
+		</items>
+		<merchant-private-data>{{order_id}}</merchant-private-data>
 	</shopping-cart>
 	<checkout-flow-support>
 		<merchant-checkout-flow-support>
@@ -19,13 +23,6 @@
 				</flat-rate-shipping>
 				<pickup name="Pickup - SE Wisconsin ONLY">
 					<price currency="USD">0.00</price>
-					<shipping-restrictions>
-						<allowed-areas>
-							<us-zip-area>
-								<zip-pattern>53140</zip-pattern>
-							</us-zip-area>
-						</allowed-areas>
-					</shipping-restrictions>
 				</pickup>
 			</shipping-methods>
 		</merchant-checkout-flow-support>

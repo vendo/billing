@@ -24,6 +24,7 @@ class View_Payment_Offsite_Google_Checkout extends Kostache
 		foreach ($this->items as $item)
 		{
 			$items[] = array(
+				'id' => $item['product']->id,
 				'name' => $item['product']->name,
 				'unit_price' => $item['product']->price,
 				'quantity' => $item['quantity'],

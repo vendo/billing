@@ -8,15 +8,18 @@
  * @copyright (c) 2010-2011 Jeremy Bush
  * @license   ISC License http://github.com/zombor/Vendo/raw/master/LICENSE
  */
-class Vendo_Payment_Offsite_Google_Checkout implements Payment_Offsite_Driver
+class Vendo_Payment_Offsite_Google_Checkout implements Vendo_Payment_Offsite_Driver
 {
 	// Fields required to do a transaction
-	private $required_fields = array(
-		'xml_body' => FALSE,
+	protected $_required_fields = array(
 		'order' => FALSE,
+		'google_API_key' => FALSE,
+		'google_merchant_id' => FALSE,
+		'google_sandbox_API_key' => FALSE,
+		'google_sandbox_merchant_id' => FALSE,
 	);
 
-	private $fields = array(
+	protected $_fields = array(
 		'order' => NULL,
 		'google_API_key' => '',
 		'google_merchant_id' => '',
@@ -25,7 +28,8 @@ class Vendo_Payment_Offsite_Google_Checkout implements Payment_Offsite_Driver
 		'xml_body' => ''
 	);
 
-	private $test_mode = FALSE;
+	protected $_test_mode = FALSE;
+	protected $_xml_header = '';
 
 	/**
 	 * Sets the config for the class.
@@ -34,32 +38,41 @@ class Vendo_Payment_Offsite_Google_Checkout implements Payment_Offsite_Driver
 	*/
 	public function __construct($test_mode = TRUE)
 	{
-		$this->fields['google_API_key'] = Kohana::config('google_checkout.merchant_key');
-		$this->fields['google_merchant_id'] = Kohana::config('google_checkout.merchant_id');
-		$this->fields['google_sandbox_API_key'] = '';
-		$this->fields['google_sandbox_merchant_id'] = '';
+		$this->set_fields(
+			array(
+				'google_API_key' => Kohana::config(
+					'payment.google_checkout.merchant_key'
+				),
+				'google_merchant_id' => Kohana::config(
+					'payment.google_checkout.merchant_id'
+				),
+				'google_sandbox_API_key' => Kohana::config(
+					'payment.google_checkout.sandbox_merchant_key'
+				),
+				'google_sandbox_merchant_id' => Kohana::config(
+					'payment.google_checkout.sandbox_merchant_id'
+				),
+			)
+		);
 
-		$this->curl_config = array(CURLOPT_HEADER         => FALSE,
-			                       CURLOPT_RETURNTRANSFER => TRUE,
-			                       CURLOPT_SSL_VERIFYPEER => FALSE);
-		$this->test_mode = $test_mode;
+		$this->_test_mode = $test_mode;
 
-		if($this->test_mode)
+		if($this->_test_mode)
 		{
 			$base64encoding = base64_encode(
-				$this->fields['google_sandbox_merchant_id'].
-				":".$this->fields['google_sandbox_API_key']
+				$this->_fields['google_sandbox_merchant_id'].
+				":".$this->_fields['google_sandbox_API_key']
 			);
 		}
 		else
 		{
 			$base64encoding = base64_encode(
-				$this->fields['google_merchant_id'].
-				":".$this->fields['google_API_key']
+				$this->_fields['google_merchant_id'].
+				":".$this->_fields['google_API_key']
 			);
 		}
 
-		$this->xml_header = array(
+		$this->_xml_header = array(
 			"Authorization: Basic ".$base64encoding,
 			"Content-Type: application/xml;charset=UTF-8",
 			"Accept: application/xml;charset=UTF-8"
@@ -70,10 +83,10 @@ class Vendo_Payment_Offsite_Google_Checkout implements Payment_Offsite_Driver
 	{
 		foreach ((array) $fields as $key => $value)
 		{
-			$this->fields[$key] = $value;
-			if (array_key_exists($key, $this->required_fields) and ! empty($value))
+			$this->_fields[$key] = $value;
+			if (array_key_exists($key, $this->_required_fields) and ! empty($value))
 			{
-				$this->required_fields[$key] = TRUE;
+				$this->_required_fields[$key] = TRUE;
 			}
 		}
 	}
@@ -102,13 +115,13 @@ class Vendo_Payment_Offsite_Google_Checkout implements Payment_Offsite_Driver
 
 		// Build the XML
 		$xml = new View_Payment_Offsite_Google_Checkout;
-		$xml->items = $this->fields['order']->get_products();
-		$xml->order_id = $this->fields['order']->id;
-		$this->xml_body = $xml->render();
+		$xml->items = $this->_fields['order']->get_products();
+		$xml->order_id = $this->_fields['order']->id;
+		$this->_fields['xml_body'] = $xml->render();
 
-		$post_url = ($this->test_mode)
-			? 'https://sandbox.google.com/checkout/api/checkout/v2/merchantCheckout/Merchant/'.$this->fields['google_sandbox_merchant_id'] // Test mode URL
-			: 'https://checkout.google.com/api/checkout/v2/merchantCheckout/Merchant/'.$this->fields['google_merchant_id']; // Live URL
+		$post_url = ($this->_test_mode)
+			? 'https://sandbox.google.com/checkout/api/checkout/v2/merchantCheckout/Merchant/'.$this->_fields['google_sandbox_merchant_id'] // Test mode URL
+			: 'https://checkout.google.com/api/checkout/v2/merchantCheckout/Merchant/'.$this->_fields['google_merchant_id']; // Live URL
 
 		$ch = curl_init($post_url);
 
@@ -116,8 +129,8 @@ class Vendo_Payment_Offsite_Google_Checkout implements Payment_Offsite_Driver
 		curl_setopt($ch, CURLOPT_POST, true);
 
 		// Set the curl POST fields
-		curl_setopt($ch, CURLOPT_HTTPHEADER, $this->xml_header);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $this->fields['xml_body']);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $this->_xml_header);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $this->_fields['xml_body']);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 		// Execute post and get results
@@ -134,7 +147,7 @@ class Vendo_Payment_Offsite_Google_Checkout implements Payment_Offsite_Driver
 		}
 
 		$xml_response = new SimpleXMLElement($response);
-		return $xml_response->{"redirect-url"};
+		return (string) $xml_response->{"redirect-url"};
 	}
 
 	/**
