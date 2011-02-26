@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<checkout-shopping-cart xmlns="http://checkout.google.com/schema/2">
+	<shopping-cart>
+		<items>
+			{{#items}}
+			<item>
+				<merchant-item-id>{{id}}</merchant-item-id>
+				<item-name>{{name}}</item-name>
+				<item-description>{{name}}</item-description>
+				<unit-price currency="USD">{{unit_price}}</unit-price>
+				<quantity>{{quantity}}</quantity>
+			</item>
+			{{/items}}
+		</items>
+		<merchant-private-data>{{order_id}}</merchant-private-data>
+	</shopping-cart>
+	<checkout-flow-support>
+		<merchant-checkout-flow-support>
+			<shipping-methods>
+				<flat-rate-shipping name="Standard USPS">
+					<price currency="USD">4.00</price>
+				</flat-rate-shipping>
+				<pickup name="Pickup - SE Wisconsin ONLY">
+					<price currency="USD">0.00</price>
+				</pickup>
+			</shipping-methods>
+		</merchant-checkout-flow-support>
+	</checkout-flow-support>
+</checkout-shopping-cart>

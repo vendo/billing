@@ -17,6 +17,7 @@ class Model_Vendo_Order extends AutoModeler_ORM implements Countable
 		'contact_id' => '',
 		'date_created' => '',
 		'address_id' => '',
+		'paid' => FALSE,
 	);
 
 	protected $_rules = array(
@@ -107,6 +108,18 @@ class Model_Vendo_Order extends AutoModeler_ORM implements Countable
 		}
 
 		return $status;
+	}
+
+	/**
+	 * Updates the paid status on this order
+	 *
+	 * @return null
+	 */
+	public function update_paid_status($paid)
+	{
+		$query = DB::update('orders')->set(
+			array('paid' => $paid)
+		)->where('id', '=', $this->id)->execute($this->db);
 	}
 
 	/**

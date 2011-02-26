@@ -10,24 +10,13 @@
 
 return array(
 	'default' => array(
-		'driver' => 'Authorize',
-		'curl' => array(
-			CURLOPT_HEADER         => FALSE,
-			CURLOPT_RETURNTRANSFER => TRUE,
-			CURLOPT_SSL_VERIFYPEER => TRUE,
-		),
+		'driver' => 'Google_Checkout',
 		'test' => TRUE,
 	),
-	'authorize' => array(
-		'login_id'  => '',
-		'trans_key' => '',
-		'md5'       => '',
-		'duplicate_window' => 1,
-	),
-	'authorize_test' => array(
-		'login_id'  => 'foo',
-		'trans_key' => 'bar',
-		'md5'       => NULL,
-		'duplicate_window' => 1,
-	),
+	'google_checkout' => array(
+		'merchant_key' => '9nMm_15FVH_ZHB3Lxi_8ZQ',
+		'merchant_id' => '966660456209745',
+		'sandbox_merchant_key' => '9nMm_15FVH_ZHB3Lxi_8ZQ',
+		'sandbox_merchant_id' => '966660456209745',
+	)
 );
