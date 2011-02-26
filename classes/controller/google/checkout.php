@@ -59,7 +59,7 @@ class Controller_Google_Checkout extends Controller
 					if ('CHARGED' == $new_state)
 					{
 						// Process the paid order.
-						$order = new Model::factory(
+						$order = Model::factory(
 							'order_google'
 						)->by_google_id($order_number);
 						$order->update_paid_status(TRUE);
