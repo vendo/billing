@@ -31,7 +31,7 @@ class Model_Vendo_Order_Google extends Model_Vendo_Order
 		$this->load(
 			db::select_array(
 				array_keys($this->_data)
-			)->where('google_order_id', '=', $id)
+			)->where('google_order_id', '=', $order_number)
 		);
 	}
 

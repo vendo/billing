@@ -157,13 +157,14 @@ class Vendo_Payment_Offsite_Google_Checkout implements Vendo_Payment_Offsite_Dri
 	 */
 	public function send($xml)
 	{
+		unset($this->_required_fields['order']);
 		// Check for required fields
 		if (in_array(FALSE, $this->_required_fields))
 		{
 			$fields = array();
 			foreach ($this->_required_fields as $key => $field)
 			{
-				if ('order' != $key AND ! $field)
+				if ( ! $field)
 					$fields[] = $key;
 			}
 			throw new Payment_Exception(
