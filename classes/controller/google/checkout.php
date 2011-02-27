@@ -1,6 +1,6 @@
 <?php
 /**
- * Controller for receiving requests from google checkout
+ * Controller for receiving api requests from google checkout
  *
  * @package   Vendo
  * @author    Jeremy Bush <contractfrombelow@gmail.com>
@@ -43,16 +43,26 @@ class Controller_Google_Checkout extends Controller
 				{
 					case 'new-order-notification':
 						// Assign the google order number to our order
-						$order_id = $XMLDocument->getElementsByTagName('merchant-private-data')->item(0)->nodeValue;
-						$google_id = $XMLDocument->getElementsByTagName('google-order-number')->item(0)->nodeValue;
+						$order_id = $XMLDocument->getElementsByTagName(
+							'merchant-private-data'
+						)->item(0)->nodeValue;
+
+						$google_id = $XMLDocument->getElementsByTagName(
+							'google-order-number'
+						)->item(0)->nodeValue;
+
 						$order = new Model_Order_Google($order_id);
 						$order->update_google_id($order_id);
 
 						break;
 					case 'order-state-change-notification':
-						$order_number = $XMLDocument->getElementsByTagName('google-order-number')->item(0)->nodeValue;
-						$previous_state = $XMLDocument->getElementsByTagName('previous-financial-order-state')->item(0)->nodeValue;
-						$new_state = $XMLDocument->getElementsByTagName('new-financial-order-state')->item(0)->nodeValue;
+						$order_number = $XMLDocument->getElementsByTagName(
+							'google-order-number'
+						)->item(0)->nodeValue;
+
+						$new_state = $XMLDocument->getElementsByTagName(
+							'new-financial-order-state'
+						)->item(0)->nodeValue;
 
 						if ('CHARGED' == $new_state)
 						{

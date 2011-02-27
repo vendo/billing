@@ -2,6 +2,8 @@
 
 /**
  * Class for processing google checkout transactions.
+ * 
+ * You'll need to add a "google_order_id" column to your orders table.
  *
  * @package   Vendo
  * @author    Jeremy Bush <contractfrombelow@gmail.com>
