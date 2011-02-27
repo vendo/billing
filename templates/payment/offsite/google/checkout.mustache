@@ -18,12 +18,7 @@
 	<checkout-flow-support>
 		<merchant-checkout-flow-support>
 			<shipping-methods>
-				<flat-rate-shipping name="Standard USPS">
-					<price currency="USD">4.00</price>
-				</flat-rate-shipping>
-				<pickup name="Pickup - SE Wisconsin ONLY">
-					<price currency="USD">0.00</price>
-				</pickup>
+				{{>shipping_methods}}
 			</shipping-methods>
 		</merchant-checkout-flow-support>
 	</checkout-flow-support>
