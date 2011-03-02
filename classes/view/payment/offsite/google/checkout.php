@@ -14,7 +14,7 @@ class View_Payment_Offsite_Google_Checkout extends Kostache
 
 	protected $_partials = array(
 		'shipping_method' => 'payment/offsite/google/checkout/shipping'
-	)
+	);
 
 	/**
 	 * Returns formatted items array for the xml
