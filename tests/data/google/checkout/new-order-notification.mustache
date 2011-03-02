@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<new-order-notification xmlns="http://checkout.google.com/schema/2" serial-number="1234-5678-90123">
+  <buyer-billing-address>
+    <address1>1234 Main St</address1>
+    <address2></address2>
+    <phone></phone>
+    <email>foo@bar.com</email>
+    <company-name></company-name>
+    <contact-name>Jeremy Bush</contact-name>
+    <fax></fax>
+    <country-code>US</country-code>
+    <city>Kenosha</city>
+    <region>WI</region>
+    <postal-code>53140</postal-code>
+  </buyer-billing-address>
+  <timestamp>2011-02-26T20:36:35.746Z</timestamp>
+  <google-order-number>1234567</google-order-number>
+  <shopping-cart>
+    <merchant-private-data>{{order_id}}</merchant-private-data>
+    <items>
+      <item>
+        <item-name>test</item-name>
+        <item-description>test</item-description>
+        <unit-price currency="USD">1.0</unit-price>
+        <quantity>1</quantity>
+        <merchant-item-id>12</merchant-item-id>
+      </item>
+    </items>
+  </shopping-cart>
+  <order-adjustment>
+    <merchant-codes />
+    <total-tax currency="USD">0.0</total-tax>
+    <shipping>
+      <flat-rate-shipping-adjustment>
+        <shipping-name>Standard USPS</shipping-name>
+        <shipping-cost currency="USD">4.0</shipping-cost>
+      </flat-rate-shipping-adjustment>
+    </shipping>
+    <adjustment-total currency="USD">4.0</adjustment-total>
+  </order-adjustment>
+  <buyer-id>661890642374381</buyer-id>
+  <buyer-marketing-preferences>
+    <email-allowed>false</email-allowed>
+  </buyer-marketing-preferences>
+  <buyer-shipping-address>
+    <address1>1234 Main St</address1>
+    <address2></address2>
+    <phone></phone>
+    <email>foo@bar.com</email>
+    <company-name></company-name>
+    <contact-name>Jeremy Bush</contact-name>
+    <fax></fax>
+    <country-code>US</country-code>
+    <city>Kenosha</city>
+    <region>WI</region>
+    <postal-code>53140</postal-code>
+  </buyer-shipping-address>
+  <order-total currency="USD">5.0</order-total>
+  <fulfillment-order-state>NEW</fulfillment-order-state>
+  <financial-order-state>REVIEWING</financial-order-state>
+</new-order-notification>

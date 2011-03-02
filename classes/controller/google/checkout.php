@@ -33,8 +33,12 @@ class Controller_Google_Checkout extends Controller
 				$xml = '<notification-history-request xmlns="http://checkout.google.com/schema/2">
 				  <serial-number>'.$serial_number.'</serial-number>
 				</notification-history-request>';
-				$response = $processor->send($xml);
-				Log::instance()->add(Log::INFO, $response);
+				$response = arr::get($_REQUEST, 'xml');
+				if ( ! $response)
+				{
+					$response = $processor->send($xml);
+				}
+				Log::instance()->add(Log::INFO, 'response: '.$response);
 
 				$XMLDocument = new DOMDocument( '1.0', 'utf-8' );
 				$XMLDocument->loadXML( utf8_encode( $response ) );
@@ -52,8 +56,7 @@ class Controller_Google_Checkout extends Controller
 						)->item(0)->nodeValue;
 
 						$order = new Model_Order_Google($order_id);
-						$order->update_google_id($order_id);
-
+						$order->update_google_id($google_id);
 						break;
 					case 'order-state-change-notification':
 						$order_number = $XMLDocument->getElementsByTagName(

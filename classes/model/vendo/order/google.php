@@ -9,17 +9,15 @@
  */
 class Model_Vendo_Order_Google extends Model_Vendo_Order
 {
-	/**
-	 * Overload constructor to add google id
-	 *
-	 * @return null
-	 */
-	public function __construct($id = NULL)
-	{
-		$this->_data['google_order_id'] = '';
-
-		parent::__construct($id);
-	}
+	protected $_data = array(
+		'id' => '',
+		'user_id' => NULL,
+		'contact_id' => '',
+		'date_created' => '',
+		'address_id' => '',
+		'paid' => FALSE,
+		'google_order_id' => '',
+	);
 
 	/**
 	 * Loads this model by google order id

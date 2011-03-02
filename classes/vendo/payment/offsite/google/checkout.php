@@ -213,6 +213,6 @@ class Vendo_Payment_Offsite_Google_Checkout implements Vendo_Payment_Offsite_Dri
 	*/
 	public static function get_xml_response()
 	{
-		return file_get_contents("php://input");
+		return arr::get($_REQUEST, 'serial_number', file_get_contents("php://input"));
 	}
 }
