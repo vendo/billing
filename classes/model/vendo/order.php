@@ -18,12 +18,14 @@ class Model_Vendo_Order extends AutoModeler_ORM implements Countable
 		'date_created' => '',
 		'address_id' => '',
 		'paid' => FALSE,
+		'order_type_id' => NULL,
 	);
 
 	protected $_rules = array(
 		'user_id' => array('numeric'),
 		'contact_id' => array('not_empty', 'numeric'),
 		'address_id' => array('not_empty', 'numeric'),
+		'order_type_id' => array('not_empty', 'numeric'),
 	);
 
 	protected $_order_products = array();
@@ -34,6 +36,15 @@ class Model_Vendo_Order extends AutoModeler_ORM implements Countable
 	);
 
 	public $credit_card;
+
+	const TYPE_CREDIT_CARD = 1;
+	const TYPE_GOOGLE_CHECKOUT = 2;
+
+	protected $_ancilary_models = array(
+		NULL => 'order_credit_card',
+		Model_Order::TYPE_CREDIT_CARD => 'order_credit_card',
+		Model_Order::TYPE_GOOGLE_CHECKOUT => 'order_google',
+	);
 
 	/**
 	 * Overload constructor to set the order products on object load
@@ -117,9 +128,8 @@ class Model_Vendo_Order extends AutoModeler_ORM implements Countable
 	 */
 	public function update_paid_status($paid)
 	{
-		$query = DB::update('orders')->set(
-			array('paid' => $paid)
-		)->where('id', '=', $this->id)->execute($this->db);
+		$this->paid = TRUE;
+		return parent::save($validation);
 	}
 
 	/**
@@ -271,5 +281,17 @@ class Model_Vendo_Order extends AutoModeler_ORM implements Countable
 		}
 
 		return round($total, 2);
+	}
+
+	/**
+	 * Retrieves the ancilary model for this order
+	 *
+	 * @return object ancilary model that relates to this one
+	 */
+	public function get_ancilary_model()
+	{
+		$model = Model::factory($this->_ancilary_models[$this->order_type_id]);
+		$model->load(db::select()->where('order_id', '=', $this->id));
+		return $model;
 	}
 }

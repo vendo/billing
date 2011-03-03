@@ -1,28 +1,26 @@
 <?php
 /**
- * Extended order model to hold a google order ID
+ * Ancilary model for google checkout orders
  *
  * @package   Vendo
  * @author    Jeremy Bush <contractfrombelow@gmail.com>
  * @copyright (c) 2010-2011 Jeremy Bush
  * @license   ISC License http://github.com/zombor/Vendo/raw/master/LICENSE
  */
-class Model_Vendo_Order_Google extends Model_Vendo_Order
+class Model_Vendo_Order_Google extends AutoModeler_ORM
 {
+	protected $_table_name = 'order_googles';
+
 	protected $_data = array(
 		'id' => '',
-		'user_id' => NULL,
-		'contact_id' => '',
-		'date_created' => '',
-		'address_id' => '',
-		'paid' => FALSE,
+		'order_id' => NULL,
 		'google_order_id' => '',
 	);
 
 	/**
-	 * Loads this model by google order id
+	 * Loads an order model by google order id
 	 *
-	 * @return Model_Vendo_Order_Google
+	 * @return Model_Vendo_Order
 	 */
 	public function by_google_id($order_number)
 	{
@@ -31,6 +29,8 @@ class Model_Vendo_Order_Google extends Model_Vendo_Order
 				array_keys($this->_data)
 			)->where('google_order_id', '=', $order_number)
 		);
+
+		return $this->order;
 	}
 
 	/**
@@ -40,8 +40,7 @@ class Model_Vendo_Order_Google extends Model_Vendo_Order
 	 */
 	public function update_google_id($google_id)
 	{
-		DB::update('orders')->set(
-			array('google_order_id' => $google_id)
-		)->where('id', '=', $this->id)->execute($this->db);
+		$this->google_order_id = $google_id;
+		return $this->save();
 	}
 }

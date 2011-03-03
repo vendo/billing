@@ -55,8 +55,9 @@ class Controller_Google_Checkout extends Controller
 							'google-order-number'
 						)->item(0)->nodeValue;
 
-						$order = new Model_Order_Google($order_id);
-						$order->update_google_id($google_id);
+						$order = new Model_Order($order_id);
+						$order_data = $order->get_ancilary_model();
+						$order_data->update_google_id($google_id);
 						break;
 					case 'order-state-change-notification':
 						$order_number = $XMLDocument->getElementsByTagName(
@@ -70,10 +71,10 @@ class Controller_Google_Checkout extends Controller
 						if ('CHARGED' == $new_state)
 						{
 							// Process the paid order.
-							$order = Model::factory(
+							$order_data = Model::factory(
 								'order_google'
 							);
-							$order->by_google_id($order_number);
+							$order = $order_data->by_google_id($order_number);
 							$order->update_paid_status(TRUE);
 						}
 						break;
