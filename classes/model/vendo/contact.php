@@ -20,10 +20,20 @@ class Model_Vendo_Contact extends AutoModeler_ORM
 	);
 
 	protected $_rules = array(
-		'email' => array('not_empty', 'email'),
-		'first_name' => array('not_empty'),
-		'last_name' => array('not_empty'),
-		'address_id' => array('not_empty', 'numeric'),
+		'email' => array(
+			array('not_empty'),
+			array('email'),
+		),
+		'first_name' => array(
+			array('not_empty'),
+		)
+		'last_name' => array(
+			array('not_empty'),
+		),
+		'address_id' => array(
+			array('not_empty'),
+			array('numeric'),
+		),
 	);
 
 	/**

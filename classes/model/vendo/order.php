@@ -22,10 +22,21 @@ class Model_Vendo_Order extends AutoModeler_ORM implements Countable
 	);
 
 	protected $_rules = array(
-		'user_id' => array('numeric'),
-		'contact_id' => array('not_empty', 'numeric'),
-		'address_id' => array('not_empty', 'numeric'),
-		'order_type_id' => array('not_empty', 'numeric'),
+		'user_id' => array(
+			array('numeric'),
+		),
+		'contact_id' => array(
+			array('not_empty'),
+			array('numeric'),
+		),
+		'address_id' => array(
+			array('not_empty'),
+			array('numeric'),
+		),
+		'order_type_id' => array(
+			array('not_empty'),
+			array('numeric'),
+		),
 	);
 
 	protected $_order_products = array();

@@ -19,9 +19,18 @@ class Model_Vendo_Order_Product extends AutoModeler_ORM
 	);
 
 	protected $_rules = array(
-		'order_id'   => array('not_empty', 'numeric'),
-		'product_id' => array('not_empty', 'numeric'),
-		'quantity'   => array('not_empty', 'numeric'),
+		'order_id' => array(
+			array('not_empty'),
+			array('numeric'),
+		),
+		'product_id' => array(
+			array('not_empty'),
+			array('numeric'),
+		),
+		'quantity' => array(
+			array('not_empty'),
+			array('numeric'),
+		),
 	);
 
 	/**
